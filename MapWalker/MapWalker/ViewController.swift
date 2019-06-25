@@ -29,6 +29,8 @@ class ViewController: NSViewController, MKMapViewDelegate, CLLocationManagerDele
   var makeGpxFileQueued:Bool = false
   var applyGpxScript:NSAppleScript!
 
+  var gpxFileURL: URL = NSURL(string: "MapWalker.gpx")! as URL
+
   @IBOutlet weak var mapView: MKMapView!
   
   override func viewDidLoad() {
@@ -45,6 +47,13 @@ class ViewController: NSViewController, MKMapViewDelegate, CLLocationManagerDele
     
     mapView.showsBuildings = true
     mapView.mapType = .standard
+
+    if let l = NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true).first {
+      let lURL = NSURL(fileURLWithPath: l, isDirectory: true)
+      let aURL = lURL.appendingPathComponent("MapWalker")!
+      let fURL = aURL.appendingPathComponent("MapWalker.gpx")
+      gpxFileURL = fURL.absoluteURL
+    }
   }
 
   override var representedObject: Any? {
@@ -64,9 +73,8 @@ class ViewController: NSViewController, MKMapViewDelegate, CLLocationManagerDele
  */
     updateCamera(mapInitialized: false)
     makeGpxFile()
-    let url = NSURL(fileURLWithPath: "MapWalker.gpx")
-    let folderUrl = url.deletingLastPathComponent
-    NSWorkspace.shared.open(folderUrl!)
+    let folderUrl = gpxFileURL.deletingLastPathComponent
+    NSWorkspace.shared.open(folderUrl())
   }
 
   func updateCamera(mapInitialized:Bool = true) {
@@ -139,9 +147,20 @@ class ViewController: NSViewController, MKMapViewDelegate, CLLocationManagerDele
   
   
   func makeGpxFile() {
+    let folderUrl: URL = gpxFileURL.deletingLastPathComponent()
+    var isDirectory = ObjCBool(true)
+    if FileManager.default.fileExists(atPath: folderUrl.relativePath, isDirectory: &isDirectory) == false {
+      debugPrint("Create folder: \(folderUrl.absoluteString)")
+      do {
+        try FileManager.default.createDirectory(at: folderUrl, withIntermediateDirectories: true, attributes: nil)
+      } catch {
+        debugPrint("Create folder failed")
+      }
+    }
+
     let fileContent = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><gpx version=\"1.0\"><name>Example gpx</name><wpt lat=\"\(centerCoordinate.latitude)\" lon=\"\(centerCoordinate.longitude)\"><name>WP</name></wpt></gpx>"
     do {
-      try fileContent.write(toFile: "MapWalker.gpx", atomically: true, encoding: String.Encoding.utf8)
+      try fileContent.write(to: gpxFileURL, atomically: true, encoding: String.Encoding.utf8)
       print("written GPX file with Location (\(centerCoordinate.latitude), \(centerCoordinate.longitude))")
       self.postApplyGpxScriptTask()
     } catch {
