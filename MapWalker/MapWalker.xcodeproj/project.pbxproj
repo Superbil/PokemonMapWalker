@@ -228,7 +228,7 @@
 			};
 			buildConfigurationList = E182A4801D571E55002C9180 /* Build configuration list for PBXProject "MapWalker" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,

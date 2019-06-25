@@ -66,13 +66,13 @@ class ViewController: NSViewController, MKMapViewDelegate, CLLocationManagerDele
     makeGpxFile()
     let url = NSURL(fileURLWithPath: "MapWalker.gpx")
     let folderUrl = url.deletingLastPathComponent
-    NSWorkspace.shared().open(folderUrl!)
+    NSWorkspace.shared.open(folderUrl!)
   }
 
   func updateCamera(mapInitialized:Bool = true) {
     var distance = 500.0
     if mapInitialized {
-        distance = mapView.camera.altitude / cos(M_PI*(Double(mapView.camera.pitch)/180.0))
+        distance = mapView.camera.altitude / cos(Double.pi*(Double(mapView.camera.pitch)/180.0))
     }
     let camera = MKMapCamera(lookingAtCenter: centerCoordinate,
                              fromDistance: distance,
@@ -98,7 +98,7 @@ class ViewController: NSViewController, MKMapViewDelegate, CLLocationManagerDele
     var errorDict:NSDictionary? = nil
     self.applyGpxScript = NSAppleScript(contentsOf: url as URL, error: &errorDict)
     if errorDict != nil {
-      assertionFailure("Error creating AppleScript: \(errorDict?.description)")
+        assertionFailure("Error creating AppleScript: \(errorDict?.description ?? "")")
       return
     }
   }
@@ -119,7 +119,7 @@ class ViewController: NSViewController, MKMapViewDelegate, CLLocationManagerDele
     print("executing AppleScript")
     applyGpxScript.executeAndReturnError(&errorDict)
     if errorDict != nil {
-      print("Error executing AppleScript: \(errorDict?.description)")
+      print("Error executing AppleScript: \(errorDict?.description ?? "")")
     } else {
       print("AppleScript execution completed")
     }
@@ -265,15 +265,15 @@ class ViewController: NSViewController, MKMapViewDelegate, CLLocationManagerDele
   
   func moveUp() {
     let scaleFactor = 1500.0 / mapView.camera.altitude
-    centerCoordinate.longitude += moveDelta * sin(Double(heading)*M_PI/180.0) / scaleFactor
-    centerCoordinate.latitude += moveDelta * cos(Double(heading)*M_PI/180.0) / scaleFactor
+    centerCoordinate.longitude += moveDelta * sin(Double(heading)*Double.pi/180.0) / scaleFactor
+    centerCoordinate.latitude += moveDelta * cos(Double(heading)*Double.pi/180.0) / scaleFactor
     updateCamera()
   }
 
   func moveDown() {
     let scaleFactor = 1500.0 / mapView.camera.altitude
-    centerCoordinate.longitude -= moveDelta * sin(Double(heading)*M_PI/180.0) / scaleFactor
-    centerCoordinate.latitude -= moveDelta * cos(Double(heading)*M_PI/180.0) / scaleFactor
+    centerCoordinate.longitude -= moveDelta * sin(Double(heading)*Double.pi/180.0) / scaleFactor
+    centerCoordinate.latitude -= moveDelta * cos(Double(heading)*Double.pi/180.0) / scaleFactor
     updateCamera()
   }
 
