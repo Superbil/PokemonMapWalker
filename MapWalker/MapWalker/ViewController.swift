@@ -74,7 +74,7 @@ class ViewController: NSViewController, MKMapViewDelegate, CLLocationManagerDele
     updateCamera(mapInitialized: false)
     makeGpxFile()
     let folderUrl = gpxFileURL.deletingLastPathComponent
-    NSWorkspace.shared.open(folderUrl())
+//    NSWorkspace.shared.open(folderUrl())
   }
 
   func updateCamera(mapInitialized:Bool = true) {
@@ -124,12 +124,9 @@ class ViewController: NSViewController, MKMapViewDelegate, CLLocationManagerDele
   
   func executeApplyGpxScript() {
     var errorDict:NSDictionary? = nil
-    print("executing AppleScript")
     applyGpxScript.executeAndReturnError(&errorDict)
     if errorDict != nil {
       print("Error executing AppleScript: \(errorDict?.description ?? "")")
-    } else {
-      print("AppleScript execution completed")
     }
     scriptExecutionQueued = false
   }
