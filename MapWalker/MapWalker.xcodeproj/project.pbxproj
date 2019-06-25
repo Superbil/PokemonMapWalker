@@ -212,21 +212,15 @@
 				TargetAttributes = {
 					E182A4841D571E55002C9180 = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = AKRKZ79L5U;
-						DevelopmentTeamName = "PING YAO WANG";
 						ProvisioningStyle = Automatic;
 					};
 					E182A4951D571E55002C9180 = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = AKRKZ79L5U;
-						DevelopmentTeamName = "PING YAO WANG";
 						ProvisioningStyle = Automatic;
 						TestTargetID = E182A4841D571E55002C9180;
 					};
 					E182A4A01D571E55002C9180 = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = AKRKZ79L5U;
-						DevelopmentTeamName = "PING YAO WANG";
 						ProvisioningStyle = Automatic;
 						TestTargetID = E182A4841D571E55002C9180;
 					};
@@ -428,6 +422,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = MapWalker/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mapwalker.MapWalker;
