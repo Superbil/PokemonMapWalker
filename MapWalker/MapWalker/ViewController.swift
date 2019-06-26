@@ -286,15 +286,15 @@ class ViewController: NSViewController, MKMapViewDelegate, CLLocationManagerDele
 
   func moveUp() {
     let scaleFactor = 1500.0 / mapView.camera.altitude
-    centerCoordinate.longitude += moveDelta * sin(Double(heading)*Double.pi/180.0) / scaleFactor
-    centerCoordinate.latitude += moveDelta * cos(Double(heading)*Double.pi/180.0) / scaleFactor
+    centerCoordinate.longitude += (moveDelta * sin(heading*Double.pi/180.0) / scaleFactor)
+    centerCoordinate.latitude += (moveDelta * cos(heading*Double.pi/180.0) / scaleFactor)
     updateCamera()
   }
 
   func moveDown() {
     let scaleFactor = 1500.0 / mapView.camera.altitude
-    centerCoordinate.longitude -= moveDelta * sin(Double(heading)*Double.pi/180.0) / scaleFactor
-    centerCoordinate.latitude -= moveDelta * cos(Double(heading)*Double.pi/180.0) / scaleFactor
+    centerCoordinate.longitude -= (moveDelta * sin(heading*Double.pi/180.0) / scaleFactor)
+    centerCoordinate.latitude -= (moveDelta * cos(heading*Double.pi/180.0) / scaleFactor)
     updateCamera()
   }
 
