@@ -124,7 +124,12 @@ class ViewController: NSViewController, MKMapViewDelegate, CLLocationManagerDele
   }
 
   func executeApplyGpxScript() {
-    var errorDict:NSDictionary? = nil
+    if applyGpxScript.isCompiled == false {
+      debugPrint("applyGpxScript is not compiled")
+      scriptExecutionQueued = false
+      return
+    }
+    var errorDict: NSDictionary?
     applyGpxScript.executeAndReturnError(&errorDict)
     if errorDict != nil {
       debugPrint("Error executing AppleScript: \(errorDict?.description ?? "")")
