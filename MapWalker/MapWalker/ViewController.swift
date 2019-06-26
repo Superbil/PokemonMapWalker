@@ -47,6 +47,8 @@ class ViewController: NSViewController, MKMapViewDelegate, CLLocationManagerDele
 
     mapView.showsBuildings = true
     mapView.mapType = .standard
+    mapView.isRotateEnabled = false
+    mapView.isPitchEnabled = false
 
     if let l = NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true).first {
       let lURL = NSURL(fileURLWithPath: l, isDirectory: true)
