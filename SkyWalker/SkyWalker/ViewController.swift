@@ -40,8 +40,6 @@ class ViewController: NSViewController {
 
     mapView.showsBuildings = true
     mapView.mapType = .standard
-    mapView.isRotateEnabled = false
-    mapView.isPitchEnabled = false
 
     gpxFileURL = NSURL(string: gpxFileName)! as URL
     if let l = NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true).first {
