@@ -50,7 +50,7 @@ class ViewController: NSViewController, MKMapViewDelegate, CLLocationManagerDele
 
     if let l = NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true).first {
       let lURL = NSURL(fileURLWithPath: l, isDirectory: true)
-      let aURL = lURL.appendingPathComponent("MapWalker")!
+      let aURL = lURL.appendingPathComponent(Bundle.main.infoDictionary![kCFBundleNameKey as String] as! String)!
       let fURL = aURL.appendingPathComponent("MapWalker.gpx")
       gpxFileURL = fURL.absoluteURL
     }
@@ -74,7 +74,7 @@ class ViewController: NSViewController, MKMapViewDelegate, CLLocationManagerDele
     updateCamera(mapInitialized: false)
     makeGpxFile()
     let folderUrl = gpxFileURL.deletingLastPathComponent
-//    NSWorkspace.shared.open(folderUrl())
+    NSWorkspace.shared.open(folderUrl())
   }
 
   func updateCamera(mapInitialized:Bool = true) {
