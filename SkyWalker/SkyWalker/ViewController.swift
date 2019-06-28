@@ -22,20 +22,17 @@ class ViewController: NSViewController, MKMapViewDelegate, CLLocationManagerDele
   var keyHandlerDispatched:Bool = false
 
   let makeGpxQueue: DispatchQueue = DispatchQueue.init(label: "com.example.MyQueue1")
-  let runGpxQueue: DispatchQueue = DispatchQueue.init(label: "com.example.MyQueue2")
-  var scriptExecutionQueued: Bool = false
   var makeGpxFileQueued: Bool = false
-  var applyGpxScript: NSAppleScript!
 
   let gpxFileName = "R2-D2.gpx"
   var gpxFileURL: URL!
 
   @IBOutlet weak var mapView: MKMapView!
 
+  let falcon: Falcon = Falcon()
+
   override func viewDidLoad() {
     super.viewDidLoad()
-
-    prepareApplyGpxScript()
 
     // Get user location
     locationManager.delegate = self
@@ -97,44 +94,6 @@ class ViewController: NSViewController, MKMapViewDelegate, CLLocationManagerDele
     objc_sync_exit(lock)
   }
 
-  func prepareApplyGpxScript() {
-    guard let path = Bundle.main.path(forResource: "ApplyGPX", ofType: "scpt") else {
-      assertionFailure("Script not found.")
-      return
-    }
-    let url = NSURL(fileURLWithPath: path)
-    var errorDict:NSDictionary?
-    self.applyGpxScript = NSAppleScript(contentsOf: url as URL, error: &errorDict)
-    if errorDict != nil {
-        debugPrint("Error creating AppleScript: \(errorDict?.description ?? "")")
-      return
-    }
-  }
-
-  func postApplyGpxScriptTask() {
-    synchronized(lock: self) {
-      if !scriptExecutionQueued {
-        scriptExecutionQueued = true
-        runGpxQueue.async {
-          self.executeApplyGpxScript()
-        }
-      }
-    }
-  }
-
-  func executeApplyGpxScript() {
-    if applyGpxScript.isCompiled == false {
-      debugPrint("applyGpxScript is not compiled")
-      scriptExecutionQueued = false
-      return
-    }
-    var errorDict: NSDictionary?
-    applyGpxScript.executeAndReturnError(&errorDict)
-    if errorDict != nil {
-      debugPrint("Error executing AppleScript: \(errorDict?.description ?? "")")
-    }
-    scriptExecutionQueued = false
-  }
 
   func postMakeGpxFileTask() {
     synchronized(lock: self) {
@@ -163,7 +122,7 @@ class ViewController: NSViewController, MKMapViewDelegate, CLLocationManagerDele
     do {
       try fileContent.write(to: gpxFileURL, atomically: true, encoding: String.Encoding.utf8)
       debugPrint("written GPX file with Location (\(centerCoordinate.latitude), \(centerCoordinate.longitude))")
-      self.postApplyGpxScriptTask()
+      falcon.jumpToLightSpeed()
     } catch {
       // do nothing
       debugPrint("error writing file")
