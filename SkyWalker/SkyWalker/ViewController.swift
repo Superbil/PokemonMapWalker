@@ -27,14 +27,13 @@ class ViewController: NSViewController, MKMapViewDelegate, CLLocationManagerDele
   var makeGpxFileQueued: Bool = false
   var applyGpxScript: NSAppleScript!
 
-  var gpxFileURL: URL = NSURL(string: "MapWalker.gpx")! as URL
+  let gpxFileName = "R2-D2.gpx"
+  var gpxFileURL: URL!
 
   @IBOutlet weak var mapView: MKMapView!
 
   override func viewDidLoad() {
     super.viewDidLoad()
-
-    // Do any additional setup after loading the view.
 
     prepareApplyGpxScript()
 
@@ -48,10 +47,12 @@ class ViewController: NSViewController, MKMapViewDelegate, CLLocationManagerDele
     mapView.isRotateEnabled = false
     mapView.isPitchEnabled = false
 
+    gpxFileURL = NSURL(string: gpxFileName)! as URL
     if let l = NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true).first {
       let lURL = NSURL(fileURLWithPath: l, isDirectory: true)
-      let aURL = lURL.appendingPathComponent(Bundle.main.infoDictionary![kCFBundleNameKey as String] as! String)!
-      let fURL = aURL.appendingPathComponent("MapWalker.gpx")
+      let projectName = Bundle.main.infoDictionary![kCFBundleNameKey as String] as! String
+      let aURL = lURL.appendingPathComponent(projectName)!
+      let fURL = aURL.appendingPathComponent(gpxFileName)
       gpxFileURL = fURL.absoluteURL
     }
   }

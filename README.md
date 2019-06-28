@@ -20,7 +20,7 @@ This project is inspired from kahopoon's [Pokemon-Go-Controller](https://github.
   - Download the project as zip and extract
   - Open `SkyWalker/SkyWalker.xcodeproj` and **Run** the project
   - Allow location access when prompted.
-    - After approval, a **Finder** window will be opened with `MapWalker.gpx` inside. Don't close this Finder window, you will need it later
+    - After approval, a **Finder** window will be opened with `R2-D2.gpx` inside. Don't close this Finder window, you will need it later
   - Open **Settings** -> **Security & Privacy** -> **Accessibility** -> (Click the lock to make changes) -> Allow **Xcode** to control your computer
   - In **Xcode** menu bar, click **Preferences** -> **Accounts** -> **Press +** -> **Add Apple ID...** -> (Add your Apple ID to Xcode)
   - Connect your iOS game device (with **Pokemon Go** installed) to your Mac
@@ -29,10 +29,10 @@ This project is inspired from kahopoon's [Pokemon-Go-Controller](https://github.
   - in **Xcode** menu bar, click **Product** -> **Destination** -> **(Choose Your connected iOS device)**
   - **Run** the project
   - Switch to the **Finder** window which is opened when you allow location access to **SkyWalker** app.
-  - Drag **MapWalker.gpx** to your project.
+  - Drag **R2-D2.gpx** to your project.
     - **Remember to uncheck "Copy file to project" !!!**
   - On your iOS device, press home and open **Maps** app for verification
-  - in **Xcode** menu bar, click **Debug** -> **Simulate Location** -> Select **MapWalker**. Your location in **Maps** app should be moved to the latest location in SkyWalker app.
+  - in **Xcode** menu bar, click **Debug** -> **Simulate Location** -> Select **R2-D2**. Your location in **Maps** app should be moved to the latest location in SkyWalker app.
     - If nothing can be selected in **Simulate Location** menu, make sure you are switched to "LocationSimulation" project window in Xcode and the app is running and is run from Xcode.
   - Switch back to **SkyWalker** app, use arrow keys to move on the maps and see if your location in Maps app on iOS device is also moved.
     - If your location in **Maps** app is not moved, check the following **Troubleshooting** part.
@@ -46,8 +46,8 @@ Troubleshooting
   - Make sure Xcode is allowed to control your computer in **Settings** -> **Security & Privacy** -> **Accessibility**.
   - Make sure LocationSimulation project is running on your device and **is run from Xcode**
   - Try to activate location yourself in Location Simulation project, then switch back to SkyWalker app
-    - In Xcode LocationSimulation project window, click **Debug** -> **Simulate Location** -> Select **MapWalker**
-  - Try to delete MapWalker.gpx in LocationSimulation project (click "Remove Reference") and add again.
+    - In Xcode LocationSimulation project window, click **Debug** -> **Simulate Location** -> Select **R2-D2**
+  - Try to delete `R2-D2.gpx` in LocationSimulation project (click "Remove Reference") and add again.
 
 License
 ----
