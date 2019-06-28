@@ -11,30 +11,11 @@
 		E182A48B1D571E55002C9180 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E182A48A1D571E55002C9180 /* ViewController.swift */; };
 		E182A48D1D571E55002C9180 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E182A48C1D571E55002C9180 /* Assets.xcassets */; };
 		E182A4901D571E55002C9180 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E182A48E1D571E55002C9180 /* Main.storyboard */; };
-		E182A49B1D571E55002C9180 /* SkyWalkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E182A49A1D571E55002C9180 /* SkyWalkerTests.swift */; };
-		E182A4A61D571E55002C9180 /* SkyWalkerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E182A4A51D571E55002C9180 /* SkyWalkerUITests.swift */; };
 		E182A4B51D571F3D002C9180 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E182A4B41D571F3D002C9180 /* MapKit.framework */; };
 		E182A4B71D571F43002C9180 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E182A4B61D571F43002C9180 /* CoreLocation.framework */; };
 		E182A4B91D57289B002C9180 /* WindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E182A4B81D57289B002C9180 /* WindowController.swift */; };
 		E182A4BD1D5730D0002C9180 /* ApplyGPX.scpt in Resources */ = {isa = PBXBuildFile; fileRef = E182A4BC1D5730D0002C9180 /* ApplyGPX.scpt */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		E182A4971D571E55002C9180 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E182A47D1D571E55002C9180 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = E182A4841D571E55002C9180;
-			remoteInfo = SkyWalker;
-		};
-		E182A4A21D571E55002C9180 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E182A47D1D571E55002C9180 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = E182A4841D571E55002C9180;
-			remoteInfo = SkyWalker;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		E182A4851D571E55002C9180 /* SkyWalker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SkyWalker.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -43,12 +24,6 @@
 		E182A48C1D571E55002C9180 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E182A48F1D571E55002C9180 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E182A4911D571E55002C9180 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E182A4961D571E55002C9180 /* SkyWalkerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SkyWalkerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		E182A49A1D571E55002C9180 /* SkyWalkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkyWalkerTests.swift; sourceTree = "<group>"; };
-		E182A49C1D571E55002C9180 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E182A4A11D571E55002C9180 /* SkyWalkerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SkyWalkerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		E182A4A51D571E55002C9180 /* SkyWalkerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkyWalkerUITests.swift; sourceTree = "<group>"; };
-		E182A4A71D571E55002C9180 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E182A4B41D571F3D002C9180 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		E182A4B61D571F43002C9180 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		E182A4B81D57289B002C9180 /* WindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowController.swift; sourceTree = "<group>"; };
@@ -65,20 +40,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E182A4931D571E55002C9180 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E182A49E1D571E55002C9180 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -87,8 +48,6 @@
 			children = (
 				E182A4BC1D5730D0002C9180 /* ApplyGPX.scpt */,
 				E182A4871D571E55002C9180 /* SkyWalker */,
-				E182A4991D571E55002C9180 /* SkyWalkerTests */,
-				E182A4A41D571E55002C9180 /* SkyWalkerUITests */,
 				E182A4861D571E55002C9180 /* Products */,
 				E182A4B31D571F3C002C9180 /* Frameworks */,
 			);
@@ -98,8 +57,6 @@
 			isa = PBXGroup;
 			children = (
 				E182A4851D571E55002C9180 /* SkyWalker.app */,
-				E182A4961D571E55002C9180 /* SkyWalkerTests.xctest */,
-				E182A4A11D571E55002C9180 /* SkyWalkerUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -115,24 +72,6 @@
 				E182A4911D571E55002C9180 /* Info.plist */,
 			);
 			path = SkyWalker;
-			sourceTree = "<group>";
-		};
-		E182A4991D571E55002C9180 /* SkyWalkerTests */ = {
-			isa = PBXGroup;
-			children = (
-				E182A49A1D571E55002C9180 /* SkyWalkerTests.swift */,
-				E182A49C1D571E55002C9180 /* Info.plist */,
-			);
-			path = SkyWalkerTests;
-			sourceTree = "<group>";
-		};
-		E182A4A41D571E55002C9180 /* SkyWalkerUITests */ = {
-			isa = PBXGroup;
-			children = (
-				E182A4A51D571E55002C9180 /* SkyWalkerUITests.swift */,
-				E182A4A71D571E55002C9180 /* Info.plist */,
-			);
-			path = SkyWalkerUITests;
 			sourceTree = "<group>";
 		};
 		E182A4B31D571F3C002C9180 /* Frameworks */ = {
@@ -164,42 +103,6 @@
 			productReference = E182A4851D571E55002C9180 /* SkyWalker.app */;
 			productType = "com.apple.product-type.application";
 		};
-		E182A4951D571E55002C9180 /* SkyWalkerTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = E182A4AD1D571E55002C9180 /* Build configuration list for PBXNativeTarget "SkyWalkerTests" */;
-			buildPhases = (
-				E182A4921D571E55002C9180 /* Sources */,
-				E182A4931D571E55002C9180 /* Frameworks */,
-				E182A4941D571E55002C9180 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				E182A4981D571E55002C9180 /* PBXTargetDependency */,
-			);
-			name = SkyWalkerTests;
-			productName = SkyWalkerTests;
-			productReference = E182A4961D571E55002C9180 /* SkyWalkerTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		E182A4A01D571E55002C9180 /* SkyWalkerUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = E182A4B01D571E55002C9180 /* Build configuration list for PBXNativeTarget "SkyWalkerUITests" */;
-			buildPhases = (
-				E182A49D1D571E55002C9180 /* Sources */,
-				E182A49E1D571E55002C9180 /* Frameworks */,
-				E182A49F1D571E55002C9180 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				E182A4A31D571E55002C9180 /* PBXTargetDependency */,
-			);
-			name = SkyWalkerUITests;
-			productName = SkyWalkerUITests;
-			productReference = E182A4A11D571E55002C9180 /* SkyWalkerUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -214,18 +117,6 @@
 						CreatedOnToolsVersion = 8.0;
 						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
-					};
-					E182A4951D571E55002C9180 = {
-						CreatedOnToolsVersion = 8.0;
-						LastSwiftMigration = 1020;
-						ProvisioningStyle = Automatic;
-						TestTargetID = E182A4841D571E55002C9180;
-					};
-					E182A4A01D571E55002C9180 = {
-						CreatedOnToolsVersion = 8.0;
-						LastSwiftMigration = 1020;
-						ProvisioningStyle = Automatic;
-						TestTargetID = E182A4841D571E55002C9180;
 					};
 				};
 			};
@@ -243,8 +134,6 @@
 			projectRoot = "";
 			targets = (
 				E182A4841D571E55002C9180 /* SkyWalker */,
-				E182A4951D571E55002C9180 /* SkyWalkerTests */,
-				E182A4A01D571E55002C9180 /* SkyWalkerUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -257,20 +146,6 @@
 				E182A48D1D571E55002C9180 /* Assets.xcassets in Resources */,
 				E182A4BD1D5730D0002C9180 /* ApplyGPX.scpt in Resources */,
 				E182A4901D571E55002C9180 /* Main.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E182A4941D571E55002C9180 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E182A49F1D571E55002C9180 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -287,36 +162,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E182A4921D571E55002C9180 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E182A49B1D571E55002C9180 /* SkyWalkerTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E182A49D1D571E55002C9180 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E182A4A61D571E55002C9180 /* SkyWalkerUITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		E182A4981D571E55002C9180 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = E182A4841D571E55002C9180 /* SkyWalker */;
-			targetProxy = E182A4971D571E55002C9180 /* PBXContainerItemProxy */;
-		};
-		E182A4A31D571E55002C9180 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = E182A4841D571E55002C9180 /* SkyWalker */;
-			targetProxy = E182A4A21D571E55002C9180 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		E182A48E1D571E55002C9180 /* Main.storyboard */ = {
@@ -464,60 +310,6 @@
 			};
 			name = Release;
 		};
-		E182A4AE1D571E55002C9180 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = SkyWalkerTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = tw.wangpy.SkyWalkerTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SkyWalker.app/Contents/MacOS/SkyWalker";
-			};
-			name = Debug;
-		};
-		E182A4AF1D571E55002C9180 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = SkyWalkerTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = tw.wangpy.SkyWalkerTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SkyWalker.app/Contents/MacOS/SkyWalker";
-			};
-			name = Release;
-		};
-		E182A4B11D571E55002C9180 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = SkyWalkerUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = tw.wangpy.SkyWalkerUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TEST_TARGET_NAME = SkyWalker;
-			};
-			name = Debug;
-		};
-		E182A4B21D571E55002C9180 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = SkyWalkerUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = tw.wangpy.SkyWalkerUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TEST_TARGET_NAME = SkyWalker;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -535,24 +327,6 @@
 			buildConfigurations = (
 				E182A4AB1D571E55002C9180 /* Debug */,
 				E182A4AC1D571E55002C9180 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		E182A4AD1D571E55002C9180 /* Build configuration list for PBXNativeTarget "SkyWalkerTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				E182A4AE1D571E55002C9180 /* Debug */,
-				E182A4AF1D571E55002C9180 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		E182A4B01D571E55002C9180 /* Build configuration list for PBXNativeTarget "SkyWalkerUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				E182A4B11D571E55002C9180 /* Debug */,
-				E182A4B21D571E55002C9180 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
