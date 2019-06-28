@@ -8,7 +8,7 @@ import Cocoa
 import MapKit
 import Dispatch
 
-class ViewController: NSViewController, MKMapViewDelegate, CLLocationManagerDelegate {
+class ViewController: NSViewController {
 
   let headingDelta: CLLocationDirection = 0.2
   let moveDelta: CLLocationDegrees = 0.000001
@@ -57,21 +57,6 @@ class ViewController: NSViewController, MKMapViewDelegate, CLLocationManagerDele
     didSet {
     // Update the view, if already loaded.
     }
-  }
-
-  func locationManager(_ manager: CLLocationManager, didUpdateTo newLocation: CLLocation, from oldLocation: CLLocation) {
-    locationManager.stopUpdatingLocation()
-
-    centerCoordinate = newLocation.coordinate
-    /*
-    let viewRegion = MKCoordinateRegionMake(centerCoordinate, MKCoordinateSpan(latitudeDelta: 0.001, longitudeDelta: 0.001))
-    let adjustedRegion = mapView.regionThatFits(viewRegion)
-    mapView.setRegion(adjustedRegion, animated: true)
- */
-    updateCamera(mapInitialized: false)
-    makeGpxFile()
-    let folderUrl = gpxFileURL.deletingLastPathComponent
-    NSWorkspace.shared.open(folderUrl())
   }
 
   func updateCamera(mapInitialized:Bool = true) {
@@ -143,14 +128,6 @@ class ViewController: NSViewController, MKMapViewDelegate, CLLocationManagerDele
     keyHandlerDispatched = true
     DispatchQueue.main.async {
       self.keyHandler()
-    }
-  }
-
-  func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-    if (abs(mapView.centerCoordinate.latitude - centerCoordinate.latitude) > 0.00001
-       || abs(mapView.centerCoordinate.longitude - centerCoordinate.longitude) > 0.00001) {
-      centerCoordinate = mapView.centerCoordinate
-      updateCamera()
     }
   }
 
@@ -247,5 +224,32 @@ class ViewController: NSViewController, MKMapViewDelegate, CLLocationManagerDele
   func moveRight() {
     heading += headingDelta
     updateCamera()
+  }
+}
+
+extension ViewController: CLLocationManagerDelegate {
+  func locationManager(_ manager: CLLocationManager, didUpdateTo newLocation: CLLocation, from oldLocation: CLLocation) {
+    locationManager.stopUpdatingLocation()
+
+    centerCoordinate = newLocation.coordinate
+    /*
+     let viewRegion = MKCoordinateRegionMake(centerCoordinate, MKCoordinateSpan(latitudeDelta: 0.001, longitudeDelta: 0.001))
+     let adjustedRegion = mapView.regionThatFits(viewRegion)
+     mapView.setRegion(adjustedRegion, animated: true)
+     */
+    updateCamera(mapInitialized: false)
+    makeGpxFile()
+    let folderUrl = gpxFileURL.deletingLastPathComponent
+    NSWorkspace.shared.open(folderUrl())
+  }
+}
+
+extension ViewController: MKMapViewDelegate {
+  func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+    if (abs(mapView.centerCoordinate.latitude - centerCoordinate.latitude) > 0.00001
+      || abs(mapView.centerCoordinate.longitude - centerCoordinate.longitude) > 0.00001) {
+      centerCoordinate = mapView.centerCoordinate
+      updateCamera()
+    }
   }
 }
