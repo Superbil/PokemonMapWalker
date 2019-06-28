@@ -46,7 +46,6 @@
 		E182A47C1D571E55002C9180 = {
 			isa = PBXGroup;
 			children = (
-				E182A4BC1D5730D0002C9180 /* ApplyGPX.scpt */,
 				E182A4871D571E55002C9180 /* SkyWalker */,
 				E182A4861D571E55002C9180 /* Products */,
 				E182A4B31D571F3C002C9180 /* Frameworks */,
@@ -69,6 +68,7 @@
 				E182A48A1D571E55002C9180 /* ViewController.swift */,
 				E182A4B81D57289B002C9180 /* WindowController.swift */,
 				E182A48E1D571E55002C9180 /* Main.storyboard */,
+				E182A4BC1D5730D0002C9180 /* ApplyGPX.scpt */,
 				E182A4911D571E55002C9180 /* Info.plist */,
 			);
 			path = SkyWalker;
