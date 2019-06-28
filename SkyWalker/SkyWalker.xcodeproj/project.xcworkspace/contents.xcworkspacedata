@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:MapWalker.xcodeproj">
+      location = "self:SkyWalker.xcodeproj">
    </FileRef>
 </Workspace>
