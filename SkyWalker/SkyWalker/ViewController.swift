@@ -21,8 +21,7 @@ class ViewController: NSViewController, MKMapViewDelegate, CLLocationManagerDele
   var keyDownList = Set<Int>(minimumCapacity: 10)
   var keyHandlerDispatched:Bool = false
 
-  let makeGpxQueue: DispatchQueue = DispatchQueue.init(label: "com.example.MyQueue1")
-  var makeGpxFileQueued: Bool = false
+  let makeGpxQueue: DispatchQueue = DispatchQueue(label: "makeGpxQueue")
 
   let gpxFileName = "R2-D2.gpx"
   var gpxFileURL: URL!
@@ -85,24 +84,9 @@ class ViewController: NSViewController, MKMapViewDelegate, CLLocationManagerDele
                              pitch: 45,
                              heading: heading)
     mapView.camera = camera
-    postMakeGpxFileTask()
-  }
 
-  func synchronized(lock:AnyObject, closure: () -> ()) {
-    objc_sync_enter(lock)
-    closure()
-    objc_sync_exit(lock)
-  }
-
-
-  func postMakeGpxFileTask() {
-    synchronized(lock: self) {
-      if !makeGpxFileQueued {
-        makeGpxFileQueued = true
-        makeGpxQueue.async {
-          self.makeGpxFile()
-        }
-      }
+    makeGpxQueue.async(flags: .barrier) {
+      self.makeGpxFile()
     }
   }
 
@@ -121,13 +105,12 @@ class ViewController: NSViewController, MKMapViewDelegate, CLLocationManagerDele
     let fileContent = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><gpx version=\"1.0\"><name>Example gpx</name><wpt lat=\"\(centerCoordinate.latitude)\" lon=\"\(centerCoordinate.longitude)\"><name>WP</name></wpt></gpx>"
     do {
       try fileContent.write(to: gpxFileURL, atomically: true, encoding: String.Encoding.utf8)
-      debugPrint("written GPX file with Location (\(centerCoordinate.latitude), \(centerCoordinate.longitude))")
+      debugPrint("written GPX with Location (\(centerCoordinate.latitude), \(centerCoordinate.longitude))")
       falcon.jumpToLightSpeed()
     } catch {
       // do nothing
       debugPrint("error writing file")
     }
-    makeGpxFileQueued = false
   }
 
   func keyHandler() {
