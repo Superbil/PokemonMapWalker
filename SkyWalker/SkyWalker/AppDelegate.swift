@@ -1,9 +1,7 @@
 //
 //  AppDelegate.swift
-//  MapWalker
+//  SkyWalker
 //
-//  Created by Brian Wang on 8/7/16.
-//  Copyright © 2016 MapWalker. All rights reserved.
 //
 
 import Cocoa

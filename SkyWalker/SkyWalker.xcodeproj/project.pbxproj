@@ -64,10 +64,10 @@
 		E182A4871D571E55002C9180 /* SkyWalker */ = {
 			isa = PBXGroup;
 			children = (
+				E182A48C1D571E55002C9180 /* Assets.xcassets */,
 				E182A4881D571E55002C9180 /* AppDelegate.swift */,
 				E182A48A1D571E55002C9180 /* ViewController.swift */,
 				E182A4B81D57289B002C9180 /* WindowController.swift */,
-				E182A48C1D571E55002C9180 /* Assets.xcassets */,
 				E182A48E1D571E55002C9180 /* Main.storyboard */,
 				E182A4911D571E55002C9180 /* Info.plist */,
 			);
