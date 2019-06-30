@@ -28,7 +28,7 @@ class MapBuilder {
 
   private let makeGpxQueue: DispatchQueue = DispatchQueue(label: "makeGpxQueue")
 
-  func makeGpxFile(withPoint atPoint: CLLocationCoordinate2D, block: (() -> Void)?) {
+  func makeGpxFile(gpxs: [GPX], block: (() -> Void)?) {
     guard let gpxFileURL = gpxFileURL else {
       assertionFailure("Must setup gpxFileURL")
       return
@@ -45,13 +45,11 @@ class MapBuilder {
       }
     }
 
-    let ls = [GPX(location: atPoint, date: Date())]
-    let gpx = GPXMaker(locations: ls)
+    let gpx = GPXMaker(locations: gpxs)
 
     do {
       let data = gpx.document.xmlData
       try data.write(to: gpxFileURL)
-      debugPrint("written GPX with Location (\(atPoint.latitude), \(atPoint.longitude))")
     } catch {
       debugPrint("error writing file")
       return
@@ -63,8 +61,10 @@ class MapBuilder {
   }
 
   public func drawPoint(_ point: CLLocationCoordinate2D, block: (() -> Void)?) {
+
+    let gpxs = [GPX(location: point, date: Date())]
     makeGpxQueue.async(flags: .barrier) {
-      self.makeGpxFile(withPoint: point, block: block)
+      self.makeGpxFile(gpxs: gpxs, block: block)
     }
   }
 }
