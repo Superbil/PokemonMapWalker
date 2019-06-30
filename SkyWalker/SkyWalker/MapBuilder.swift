@@ -45,7 +45,7 @@ class MapBuilder {
       }
     }
 
-    let ls = [GPX(location: atPoint, date: nil)]
+    let ls = [GPX(location: atPoint, date: Date())]
     let gpx = GPXMaker(locations: ls)
 
     do {
