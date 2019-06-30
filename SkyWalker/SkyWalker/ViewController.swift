@@ -19,7 +19,7 @@ class ViewController: NSViewController {
   let locationManager = CLLocationManager()
 
   var keyDownList = Set<Int>(minimumCapacity: 10)
-  var keyHandlerDispatched:Bool = false
+  var keyHandlerDispatched: Bool = false
 
   @IBOutlet weak var mapView: MKMapView!
 
@@ -96,12 +96,13 @@ class ViewController: NSViewController {
   }
 
   func handleKeyDown(event: NSEvent) {
-    guard let characters = event.charactersIgnoringModifiers else {
-      return
+    guard
+      let characters = event.charactersIgnoringModifiers,
+      let keyValue = characters.unicodeScalars.first?.value
+      else {
+        return
     }
-    guard let keyValue = characters.unicodeScalars.first?.value else {
-      return
-    }
+
     switch (Int(keyValue)) {
     case NSUpArrowFunctionKey:
       keyDownList.insert(NSUpArrowFunctionKey)
@@ -121,10 +122,6 @@ class ViewController: NSViewController {
     case Int((String("d").unicodeScalars.first?.value)!):
       keyDownList.insert(NSRightArrowFunctionKey)
 
-    case Int((String("=").unicodeScalars.first?.value)!):
-      keyDownList.insert(Int((String("=").unicodeScalars.first?.value)!))
-    case Int((String("-").unicodeScalars.first?.value)!):
-      keyDownList.insert(Int((String("+").unicodeScalars.first?.value)!))
     default:
       return
     }
@@ -132,12 +129,13 @@ class ViewController: NSViewController {
   }
 
   func handleKeyUp(event: NSEvent) {
-    guard let characters = event.charactersIgnoringModifiers else {
-      return
+    guard
+      let characters = event.charactersIgnoringModifiers,
+      let keyValue = characters.unicodeScalars.first?.value
+      else {
+        return
     }
-    guard let keyValue = characters.unicodeScalars.first?.value else {
-      return
-    }
+
     switch (Int(keyValue)) {
     case NSUpArrowFunctionKey:
       keyDownList.remove(NSUpArrowFunctionKey)
@@ -157,10 +155,6 @@ class ViewController: NSViewController {
     case Int((String("d").unicodeScalars.first?.value)!):
       keyDownList.remove(NSRightArrowFunctionKey)
 
-    case Int((String("=").unicodeScalars.first?.value)!):
-      keyDownList.remove(Int((String("=").unicodeScalars.first?.value)!))
-    case Int((String("-").unicodeScalars.first?.value)!):
-      keyDownList.remove(Int((String("+").unicodeScalars.first?.value)!))
     default:
         break;
     }
