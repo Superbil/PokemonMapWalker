@@ -45,16 +45,20 @@ class MapBuilder {
       }
     }
 
-    let fileContent = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><gpx version=\"1.0\"><name>Example gpx</name><wpt lat=\"\(atPoint.latitude)\" lon=\"\(atPoint.longitude)\"><name>WP</name></wpt></gpx>"
+    let ls = [GPX(location: atPoint, date: nil)]
+    let gpx = GPXMaker(locations: ls)
+
     do {
-      try fileContent.write(to: gpxFileURL, atomically: true, encoding: String.Encoding.utf8)
+      let data = gpx.document.xmlData
+      try data.write(to: gpxFileURL)
       debugPrint("written GPX with Location (\(atPoint.latitude), \(atPoint.longitude))")
-      if let block = block {
-        block()
-      }
     } catch {
-      // do nothing
       debugPrint("error writing file")
+      return
+    }
+
+    if let block = block {
+      block()
     }
   }
 
