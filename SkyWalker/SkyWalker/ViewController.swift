@@ -21,14 +21,10 @@ class ViewController: NSViewController {
   var keyDownList = Set<Int>(minimumCapacity: 10)
   var keyHandlerDispatched:Bool = false
 
-  let makeGpxQueue: DispatchQueue = DispatchQueue(label: "makeGpxQueue")
-
-  let gpxFileName = "R2-D2.gpx"
-  var gpxFileURL: URL!
-
   @IBOutlet weak var mapView: MKMapView!
 
   let falcon: Falcon = Falcon()
+  let mapBuilder: MapBuilder = MapBuilder(fileName: "R2-D2.gpx")
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -40,15 +36,6 @@ class ViewController: NSViewController {
 
     mapView.showsBuildings = true
     mapView.mapType = .standard
-
-    gpxFileURL = NSURL(string: gpxFileName)! as URL
-    if let l = NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true).first {
-      let lURL = NSURL(fileURLWithPath: l, isDirectory: true)
-      let projectName = Bundle.main.infoDictionary![kCFBundleNameKey as String] as! String
-      let aURL = lURL.appendingPathComponent(projectName)!
-      let fURL = aURL.appendingPathComponent(gpxFileName)
-      gpxFileURL = fURL.absoluteURL
-    }
   }
 
   override var representedObject: Any? {
@@ -68,31 +55,8 @@ class ViewController: NSViewController {
                              heading: heading)
     mapView.camera = camera
 
-    makeGpxQueue.async(flags: .barrier) {
-      self.makeGpxFile()
-    }
-  }
-
-  func makeGpxFile() {
-    let folderUrl: URL = gpxFileURL.deletingLastPathComponent()
-    var isDirectory = ObjCBool(true)
-    if FileManager.default.fileExists(atPath: folderUrl.relativePath, isDirectory: &isDirectory) == false {
-      debugPrint("Create folder: \(folderUrl.absoluteString)")
-      do {
-        try FileManager.default.createDirectory(at: folderUrl, withIntermediateDirectories: true, attributes: nil)
-      } catch {
-        debugPrint("Create folder failed")
-      }
-    }
-
-    let fileContent = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><gpx version=\"1.0\"><name>Example gpx</name><wpt lat=\"\(centerCoordinate.latitude)\" lon=\"\(centerCoordinate.longitude)\"><name>WP</name></wpt></gpx>"
-    do {
-      try fileContent.write(to: gpxFileURL, atomically: true, encoding: String.Encoding.utf8)
-      debugPrint("written GPX with Location (\(centerCoordinate.latitude), \(centerCoordinate.longitude))")
-      falcon.jumpToLightSpeed()
-    } catch {
-      // do nothing
-      debugPrint("error writing file")
+    mapBuilder.drawPoint(centerCoordinate) {
+      self.falcon.jumpToLightSpeed()
     }
   }
 
@@ -236,9 +200,13 @@ extension ViewController: CLLocationManagerDelegate {
      mapView.setRegion(adjustedRegion, animated: true)
      */
     updateCamera(mapInitialized: false)
-    makeGpxFile()
-    let folderUrl = gpxFileURL.deletingLastPathComponent
-    NSWorkspace.shared.open(folderUrl())
+    mapBuilder.drawPoint(centerCoordinate) {
+      self.falcon.jumpToLightSpeed()
+    }
+    if let url = mapBuilder.gpxFileURL {
+      let folderURL = url.deletingLastPathComponent
+      NSWorkspace.shared.open(folderURL())
+    }
   }
 }
 

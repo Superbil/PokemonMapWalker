@@ -16,6 +16,7 @@
 		E182A4B91D57289B002C9180 /* WindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E182A4B81D57289B002C9180 /* WindowController.swift */; };
 		E182A4BD1D5730D0002C9180 /* ApplyGPX.scpt in Resources */ = {isa = PBXBuildFile; fileRef = E182A4BC1D5730D0002C9180 /* ApplyGPX.scpt */; };
 		E70C8B7622C68FF400F3DE8D /* Falcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70C8B7522C68FF400F3DE8D /* Falcon.swift */; };
+		E7C9389522C8C54200D997BF /* MapBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C9389422C8C54100D997BF /* MapBuilder.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		E182A4B81D57289B002C9180 /* WindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowController.swift; sourceTree = "<group>"; };
 		E182A4BC1D5730D0002C9180 /* ApplyGPX.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = ApplyGPX.scpt; sourceTree = "<group>"; };
 		E70C8B7522C68FF400F3DE8D /* Falcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Falcon.swift; sourceTree = "<group>"; };
+		E7C9389422C8C54100D997BF /* MapBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapBuilder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +69,7 @@
 			children = (
 				E182A48C1D571E55002C9180 /* Assets.xcassets */,
 				E182A4881D571E55002C9180 /* AppDelegate.swift */,
+				E7C9389422C8C54100D997BF /* MapBuilder.swift */,
 				E182A48A1D571E55002C9180 /* ViewController.swift */,
 				E182A4B81D57289B002C9180 /* WindowController.swift */,
 				E70C8B7522C68FF400F3DE8D /* Falcon.swift */,
@@ -163,6 +166,7 @@
 				E182A4B91D57289B002C9180 /* WindowController.swift in Sources */,
 				E70C8B7622C68FF400F3DE8D /* Falcon.swift in Sources */,
 				E182A4891D571E55002C9180 /* AppDelegate.swift in Sources */,
+				E7C9389522C8C54200D997BF /* MapBuilder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
