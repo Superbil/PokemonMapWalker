@@ -60,9 +60,47 @@ class MapBuilder {
     }
   }
 
+  private func makePointIn(center: CLLocationCoordinate2D, distance: CLLocationDistance = 10) -> CLLocationCoordinate2D {
+
+    let lat = center.latitude
+    let lon = center.longitude
+    let radius = distance / 1000
+
+    let cr = CLCircularRegion(center: center, radius: radius, identifier: "cr")
+
+    var foundLocation: CLLocationCoordinate2D = center
+    var checkLocation = false
+
+    let r = radius / 1000
+    while checkLocation == false {
+      let rlat = Double.random(in: lat - r ... lat + r)
+      let rLon = Double.random(in: lon - r ... lon + r)
+      let newLocation = CLLocationCoordinate2D(latitude: rlat, longitude: rLon)
+      if cr.contains(newLocation) && CLLocationCoordinate2DIsValid(newLocation) {
+        checkLocation = true
+        foundLocation = newLocation
+        break
+      }
+    }
+
+    return foundLocation
+  }
+
   public func drawPoint(_ point: CLLocationCoordinate2D, block: (() -> Void)?) {
 
-    let gpxs = [GPX(location: point, date: Date())]
+    let startDate = Date()
+    var gpxs: [GPX] = []
+    gpxs.append(GPX(location: point, date: startDate))
+
+    for i in 1...3 {
+      let l = self.makePointIn(center: point)
+
+      let calender = Calendar.current
+      let nextDate = calender.date(byAdding: .second, value: i, to: startDate)
+
+      gpxs.append(GPX(location: l, date: nextDate))
+    }
+
     makeGpxQueue.async(flags: .barrier) {
       self.makeGpxFile(gpxs: gpxs, block: block)
     }

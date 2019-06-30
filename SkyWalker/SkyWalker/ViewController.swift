@@ -56,7 +56,9 @@ class ViewController: NSViewController {
     mapView.camera = camera
 
     mapBuilder.drawPoint(centerCoordinate) {
-      self.falcon.jumpToLightSpeed()
+      if mapInitialized {
+        self.falcon.jumpToLightSpeed()
+      }
     }
   }
 
@@ -194,11 +196,7 @@ extension ViewController: CLLocationManagerDelegate {
     locationManager.stopUpdatingLocation()
 
     centerCoordinate = newLocation.coordinate
-    /*
-     let viewRegion = MKCoordinateRegionMake(centerCoordinate, MKCoordinateSpan(latitudeDelta: 0.001, longitudeDelta: 0.001))
-     let adjustedRegion = mapView.regionThatFits(viewRegion)
-     mapView.setRegion(adjustedRegion, animated: true)
-     */
+
     updateCamera(mapInitialized: false)
     mapBuilder.drawPoint(centerCoordinate) {
       self.falcon.jumpToLightSpeed()
