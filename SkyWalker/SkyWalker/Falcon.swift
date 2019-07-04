@@ -55,7 +55,8 @@ class Falcon {
     var errors: NSDictionary?
     script.executeAppleEvent(event, error: &errors)
     if let errors = errors {
-      debugPrint("Error executing AppleScript: \(errors.description)")
+        debugPrint("Error executing AppleScript: \(errors.description)")
+        debugPrint(errors[NSAppleScript.errorMessage] as! String)
     }
   }
 
