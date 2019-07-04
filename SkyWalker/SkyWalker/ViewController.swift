@@ -54,12 +54,6 @@ class ViewController: NSViewController {
                              pitch: 45,
                              heading: heading)
     mapView.camera = camera
-
-    mapBuilder.drawPoint(centerCoordinate) {
-      if mapInitialized {
-        self.falcon.jumpToLightSpeed()
-      }
-    }
   }
 
   func keyHandler() {
@@ -165,6 +159,10 @@ class ViewController: NSViewController {
     centerCoordinate.longitude += (moveDelta * sin(heading*Double.pi/180.0) / scaleFactor)
     centerCoordinate.latitude += (moveDelta * cos(heading*Double.pi/180.0) / scaleFactor)
     updateCamera()
+
+    mapBuilder.drawPoint(centerCoordinate) {
+      self.falcon.jumpToLightSpeed()
+    }
   }
 
   func moveDown() {
@@ -172,16 +170,28 @@ class ViewController: NSViewController {
     centerCoordinate.longitude -= (moveDelta * sin(heading*Double.pi/180.0) / scaleFactor)
     centerCoordinate.latitude -= (moveDelta * cos(heading*Double.pi/180.0) / scaleFactor)
     updateCamera()
+
+    mapBuilder.drawPoint(centerCoordinate) {
+      self.falcon.jumpToLightSpeed()
+    }
   }
 
   func moveLeft() {
     heading -= headingDelta
     updateCamera()
+
+    mapBuilder.drawPoint(centerCoordinate) {
+      self.falcon.jumpToLightSpeed()
+    }
   }
 
   func moveRight() {
     heading += headingDelta
     updateCamera()
+
+    mapBuilder.drawPoint(centerCoordinate) {
+      self.falcon.jumpToLightSpeed()
+    }
   }
 }
 
@@ -192,9 +202,7 @@ extension ViewController: CLLocationManagerDelegate {
     centerCoordinate = newLocation.coordinate
 
     updateCamera(mapInitialized: false)
-    mapBuilder.drawPoint(centerCoordinate) {
-      self.falcon.jumpToLightSpeed()
-    }
+
     if let url = mapBuilder.gpxFileURL {
       let folderURL = url.deletingLastPathComponent
       NSWorkspace.shared.open(folderURL())
@@ -207,7 +215,12 @@ extension ViewController: MKMapViewDelegate {
     if (abs(mapView.centerCoordinate.latitude - centerCoordinate.latitude) > 0.00001
       || abs(mapView.centerCoordinate.longitude - centerCoordinate.longitude) > 0.00001) {
       centerCoordinate = mapView.centerCoordinate
+
       updateCamera()
+
+      mapBuilder.drawPoint(centerCoordinate) {
+        self.falcon.jumpToLightSpeed()
+      }
     }
   }
 }
