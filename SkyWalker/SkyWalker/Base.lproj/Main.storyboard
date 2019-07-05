@@ -696,7 +696,15 @@
                                     <outlet property="delegate" destination="XfG-lQ-9wD" id="pEG-qN-P2I"/>
                                 </connections>
                             </mapView>
-                            <button verticalHuggingPriority="750" alphaValue="0.69999999999999996" translatesAutoresizingMaskIntoConstraints="NO" id="Goi-AX-FMH">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rFx-vy-gpr">
+                                <rect key="frame" x="2" y="583" width="37" height="17"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="rJb-Bt-Qbw">
+                                    <font key="font" usesAppearanceFont="YES"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <button verticalHuggingPriority="750" alphaValue="0.69999999999999996" translatesAutoresizingMaskIntoConstraints="NO" id="Goi-AX-FMH" userLabel="Center Camera">
                                 <rect key="frame" x="384" y="283" width="32" height="31"/>
                                 <buttonCell key="cell" type="round" bezelStyle="circular" alignment="center" refusesFirstResponder="YES" borderStyle="border" inset="2" id="QeS-sC-3Lk">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -710,11 +718,15 @@
                             <constraint firstAttribute="trailing" secondItem="rGH-Hd-aJq" secondAttribute="trailing" id="G7l-91-WFg"/>
                             <constraint firstItem="Goi-AX-FMH" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="PXS-eC-hUN"/>
                             <constraint firstItem="rGH-Hd-aJq" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="USl-KP-mCW"/>
+                            <constraint firstItem="rFx-vy-gpr" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="4" id="W28-Po-4fC"/>
+                            <constraint firstItem="rFx-vy-gpr" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="fGY-2b-IqL"/>
                             <constraint firstItem="rGH-Hd-aJq" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="q7n-NL-1kC"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="rFx-vy-gpr" secondAttribute="trailing" constant="4" id="zXf-WP-BH4"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="mapView" destination="rGH-Hd-aJq" id="lud-Qv-jgo"/>
+                        <outlet property="resultLabel" destination="rFx-vy-gpr" id="kZC-cl-oyp"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>

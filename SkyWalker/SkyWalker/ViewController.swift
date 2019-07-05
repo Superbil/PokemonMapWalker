@@ -21,9 +21,20 @@ class ViewController: NSViewController {
   var keyDownList = Set<Int>(minimumCapacity: 10)
   var keyHandlerDispatched: Bool = false
 
-  @IBOutlet weak var mapView: MKMapView!
+  @IBOutlet weak var mapView: MKMapView! {
+      didSet {
+          mapView.showsBuildings = true
+          mapView.mapType = .standard
+          mapView.showsCompass = true
+      }
+  }
+  @IBOutlet weak var resultLabel: NSTextField! {
+      didSet {
+          resultLabel.stringValue = ""
+      }
+  }
 
-  let falcon: Falcon = Falcon()
+  var falcon: Falcon?
   let mapBuilder: MapBuilder = MapBuilder(fileName: "R2-D2.gpx")
 
   override func viewDidLoad() {
@@ -34,8 +45,13 @@ class ViewController: NSViewController {
     locationManager.desiredAccuracy = kCLLocationAccuracyBest
     locationManager.startUpdatingLocation()
 
-    mapView.showsBuildings = true
-    mapView.mapType = .standard
+    do {
+      falcon = try Falcon()
+    } catch {
+      debugPrint("Init Falcon failed")
+    }
+
+    jumpTo(location: kCLLocationCoordinate2DInvalid)
   }
 
   override var representedObject: Any? {
@@ -55,6 +71,36 @@ class ViewController: NSViewController {
                              heading: heading)
     mapView.camera = camera
   }
+
+    func executeStatus(_ result: Bool) {
+        DispatchQueue.main.async {
+            self.resultLabel.textColor = result ? .green : .red
+            self.resultLabel.stringValue = result ? "Success" : "Failed"
+        }
+    }
+
+    func jumpTo(location: CLLocationCoordinate2D) {
+        if CLLocationCoordinate2DIsValid(location) == false {
+            do {
+                try falcon?.resetJump()
+            } catch {
+                debugPrint("Can't reset")
+                self.executeStatus(false)
+            }
+            return
+        }
+
+        mapBuilder.drawPoint(location) {
+            guard let falcon = self.falcon else { return }
+
+            do {
+                try falcon.jumpToLightSpeed()
+                self.executeStatus(true)
+            } catch {
+                self.executeStatus(false)
+            }
+        }
+    }
 
   func keyHandler() {
     if keyDownList.count == 0 {
@@ -160,9 +206,7 @@ class ViewController: NSViewController {
     centerCoordinate.latitude += (moveDelta * cos(heading*Double.pi/180.0) / scaleFactor)
     updateCamera()
 
-    mapBuilder.drawPoint(centerCoordinate) {
-      self.falcon.jumpToLightSpeed()
-    }
+    jumpTo(location: centerCoordinate)
   }
 
   func moveDown() {
@@ -171,27 +215,21 @@ class ViewController: NSViewController {
     centerCoordinate.latitude -= (moveDelta * cos(heading*Double.pi/180.0) / scaleFactor)
     updateCamera()
 
-    mapBuilder.drawPoint(centerCoordinate) {
-      self.falcon.jumpToLightSpeed()
-    }
+    jumpTo(location: centerCoordinate)
   }
 
   func moveLeft() {
     heading -= headingDelta
     updateCamera()
 
-    mapBuilder.drawPoint(centerCoordinate) {
-      self.falcon.jumpToLightSpeed()
-    }
+    jumpTo(location: centerCoordinate)
   }
 
   func moveRight() {
     heading += headingDelta
     updateCamera()
 
-    mapBuilder.drawPoint(centerCoordinate) {
-      self.falcon.jumpToLightSpeed()
-    }
+    jumpTo(location: centerCoordinate)
   }
 }
 
@@ -218,9 +256,7 @@ extension ViewController: MKMapViewDelegate {
 
       updateCamera()
 
-      mapBuilder.drawPoint(centerCoordinate) {
-        self.falcon.jumpToLightSpeed()
-      }
+      jumpTo(location: centerCoordinate)
     }
   }
 }

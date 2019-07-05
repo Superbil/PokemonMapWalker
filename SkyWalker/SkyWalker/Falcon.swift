@@ -7,6 +7,27 @@
 import Foundation
 import Carbon
 
+enum FalconError: Error {
+
+    case noScript(name: String)
+    case engineEmpty
+    case noAuth
+    case executeFailed(errors: NSDictionary)
+
+    func errorMessage() -> String {
+        switch self {
+        case .noScript(let name):
+            return "\(name).scpt not found."
+        case .engineEmpty:
+            return "applyGpxScript is null"
+        case .noAuth:
+            return "Require Auth"
+        case .executeFailed(let errors):
+            return errors.description
+        }
+    }
+}
+
 class Falcon {
 
   public var projectName: String = "LocationSimulation"
@@ -14,25 +35,25 @@ class Falcon {
 
   private var applyGpxScript: NSAppleScript?
 
-  init() {
+  init() throws {
     let name = "ApplyGPX"
     guard let path = Bundle.main.path(forResource: name, ofType: "scpt") else {
       assertionFailure("\(name).scpt not found.")
-      return
+      throw FalconError.noScript(name: name)
     }
     let url = NSURL(fileURLWithPath: path)
     var errors: NSDictionary?
     guard let script = NSAppleScript(contentsOf: url as URL, error: &errors) else {
       assertionFailure("\(name).scpt script init failed.")
-      return
+      throw FalconError.noScript(name: name)
     }
     self.applyGpxScript = script
   }
 
-  private func selectLocation(projectName: String, simulateLocation: String) {
+  private func selectLocation(projectName: String, simulateLocation: String) throws {
     guard let script = applyGpxScript else {
       debugPrint("applyGpxScript is null")
-      return
+      throw FalconError.engineEmpty
     }
 
     let handler = NSAppleEventDescriptor(string: "selectLocation")
@@ -57,10 +78,20 @@ class Falcon {
     if let errors = errors {
         debugPrint("Error executing AppleScript: \(errors.description)")
         debugPrint(errors[NSAppleScript.errorMessage] as! String)
+        let errorNumber = errors[NSAppleScript.errorNumber] as! NSNumber
+        if errorNumber.intValue == -25211 {
+            throw FalconError.noAuth
+        }
+        throw FalconError.executeFailed(errors: errors)
     }
   }
 
-  func jumpToLightSpeed() {
-    selectLocation(projectName: projectName, simulateLocation: menuItemName)
+  func jumpToLightSpeed() throws {
+      try selectLocation(projectName: projectName, simulateLocation: menuItemName)
+  }
+
+  func resetJump() throws {
+    // Nil is special keyword to select location `Don't simulate Location`
+    try selectLocation(projectName: projectName, simulateLocation: "Nil")
   }
 }
