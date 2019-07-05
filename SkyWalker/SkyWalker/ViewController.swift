@@ -73,6 +73,13 @@ class ViewController: NSViewController {
     }
 
     func executeStatus(_ result: Bool) {
+        if Settings.showMessage == false {
+            DispatchQueue.main.async {
+                self.resultLabel.stringValue = ""
+            }
+            return
+        }
+
         DispatchQueue.main.async {
             self.resultLabel.textColor = result ? .green : .red
             self.resultLabel.stringValue = result ? "Success" : "Failed"
@@ -80,6 +87,10 @@ class ViewController: NSViewController {
     }
 
     func jumpTo(location: CLLocationCoordinate2D) {
+        if Settings.runScript == false {
+            return
+        }
+
         if CLLocationCoordinate2DIsValid(location) == false {
             do {
                 try falcon?.resetJump()
