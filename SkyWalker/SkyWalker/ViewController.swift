@@ -254,7 +254,9 @@ extension ViewController: CLLocationManagerDelegate {
 
         if let url = mapBuilder.gpxFileURL {
             let folderURL = url.deletingLastPathComponent
-            NSWorkspace.shared.open(folderURL())
+            if Settings.showGPXFolder {
+                NSWorkspace.shared.open(folderURL())
+            }
         }
     }
 }

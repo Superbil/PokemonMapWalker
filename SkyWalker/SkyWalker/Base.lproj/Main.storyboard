@@ -181,6 +181,12 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Debug" id="GEO-Iw-cKr">
                                     <items>
+                                        <menuItem title="Show Folder" id="DvK-h1-C8K">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="showGPXFolderActionWith:" target="Ady-hI-5gd" id="RUa-WN-Nxr"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem title="Run Script" id="Gi5-1S-RQB">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>

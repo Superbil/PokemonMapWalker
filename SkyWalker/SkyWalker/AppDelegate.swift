@@ -10,7 +10,7 @@ import Cocoa
 class AppDelegate: NSObject, NSApplicationDelegate {
 
     private func applicationDidFinishLaunching(notification: NSNotification) {
-        // Insert code here to initialize your application
+        Settings.defaultValue()
     }
 
     func applicationWillTerminate(aNotification: NSNotification) {
