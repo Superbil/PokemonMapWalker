@@ -10,67 +10,67 @@ import Dispatch
 
 class ViewController: NSViewController {
 
-  let headingDelta: CLLocationDirection = 0.2
-  let moveDelta: CLLocationDegrees = 0.000001
+    let headingDelta: CLLocationDirection = 0.2
+    let moveDelta: CLLocationDegrees = 0.000001
 
-  var heading: CLLocationDirection = 0.0
-  var centerCoordinate = CLLocationCoordinate2D()
+    var heading: CLLocationDirection = 0.0
+    var centerCoordinate = CLLocationCoordinate2D()
 
-  let locationManager = CLLocationManager()
+    let locationManager = CLLocationManager()
 
-  var keyDownList = Set<Int>(minimumCapacity: 10)
-  var keyHandlerDispatched: Bool = false
+    var keyDownList = Set<Int>(minimumCapacity: 10)
+    var keyHandlerDispatched: Bool = false
 
-  @IBOutlet weak var mapView: MKMapView! {
-      didSet {
-          mapView.showsBuildings = true
-          mapView.mapType = .standard
-          mapView.showsCompass = true
-      }
-  }
-  @IBOutlet weak var resultLabel: NSTextField! {
-      didSet {
-          resultLabel.stringValue = ""
-      }
-  }
-
-  var falcon: Falcon?
-  let mapBuilder: MapBuilder = MapBuilder(fileName: "R2-D2.gpx")
-
-  override func viewDidLoad() {
-    super.viewDidLoad()
-
-    // Get user location
-    locationManager.delegate = self
-    locationManager.desiredAccuracy = kCLLocationAccuracyBest
-    locationManager.startUpdatingLocation()
-
-    do {
-      falcon = try Falcon()
-    } catch {
-      debugPrint("Init Falcon failed")
+    @IBOutlet weak var mapView: MKMapView! {
+        didSet {
+            mapView.showsBuildings = true
+            mapView.mapType = .standard
+            mapView.showsCompass = true
+        }
+    }
+    @IBOutlet weak var resultLabel: NSTextField! {
+        didSet {
+            resultLabel.stringValue = ""
+        }
     }
 
-    jumpTo(location: kCLLocationCoordinate2DInvalid)
-  }
+    var falcon: Falcon?
+    let mapBuilder: MapBuilder = MapBuilder(fileName: "R2-D2.gpx")
 
-  override var representedObject: Any? {
-    didSet {
-    // Update the view, if already loaded.
-    }
-  }
+    override func viewDidLoad() {
+        super.viewDidLoad()
 
-  func updateCamera(mapInitialized:Bool = true) {
-    var distance = 500.0
-    if mapInitialized {
-        distance = mapView.camera.altitude / cos(Double.pi*(Double(mapView.camera.pitch)/180.0))
+        // Get user location
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.startUpdatingLocation()
+
+        do {
+            falcon = try Falcon()
+        } catch {
+            debugPrint("Init Falcon failed")
+        }
+
+        jumpTo(location: kCLLocationCoordinate2DInvalid)
     }
-    let camera = MKMapCamera(lookingAtCenter: centerCoordinate,
-                             fromDistance: distance,
-                             pitch: 45,
-                             heading: heading)
-    mapView.camera = camera
-  }
+
+    override var representedObject: Any? {
+        didSet {
+            // Update the view, if already loaded.
+        }
+    }
+
+    func updateCamera(mapInitialized:Bool = true) {
+        var distance = 500.0
+        if mapInitialized {
+            distance = mapView.camera.altitude / cos(Double.pi*(Double(mapView.camera.pitch)/180.0))
+        }
+        let camera = MKMapCamera(lookingAtCenter: centerCoordinate,
+                                 fromDistance: distance,
+                                 pitch: 45,
+                                 heading: heading)
+        mapView.camera = camera
+    }
 
     func executeStatus(_ result: Bool) {
         DispatchQueue.main.async {
@@ -102,161 +102,161 @@ class ViewController: NSViewController {
         }
     }
 
-  func keyHandler() {
-    if keyDownList.count == 0 {
-      keyHandlerDispatched = false
-      return
+    func keyHandler() {
+        if keyDownList.count == 0 {
+            keyHandlerDispatched = false
+            return
+        }
+
+        if (keyDownList.contains(NSUpArrowFunctionKey)) {
+            moveUp()
+        }
+        if (keyDownList.contains(NSDownArrowFunctionKey)) {
+            moveDown()
+        }
+        if (keyDownList.contains(NSLeftArrowFunctionKey)) {
+            moveLeft()
+        }
+        if (keyDownList.contains(NSRightArrowFunctionKey)) {
+            moveRight()
+        }
+        DispatchQueue.main.async {
+            self.keyHandler()
+        }
     }
 
-    if (keyDownList.contains(NSUpArrowFunctionKey)) {
-      moveUp()
-    }
-    if (keyDownList.contains(NSDownArrowFunctionKey)) {
-      moveDown()
-    }
-    if (keyDownList.contains(NSLeftArrowFunctionKey)) {
-      moveLeft()
-    }
-    if (keyDownList.contains(NSRightArrowFunctionKey)) {
-      moveRight()
-    }
-    DispatchQueue.main.async {
-      self.keyHandler()
-    }
-  }
-
-  func dispatchKeyHandler() {
-    if keyHandlerDispatched {
-      return
-    }
-    keyHandlerDispatched = true
-    DispatchQueue.main.async {
-      self.keyHandler()
-    }
-  }
-
-  func handleKeyDown(event: NSEvent) {
-    guard
-      let characters = event.charactersIgnoringModifiers,
-      let keyValue = characters.unicodeScalars.first?.value
-      else {
-        return
+    func dispatchKeyHandler() {
+        if keyHandlerDispatched {
+            return
+        }
+        keyHandlerDispatched = true
+        DispatchQueue.main.async {
+            self.keyHandler()
+        }
     }
 
-    switch (Int(keyValue)) {
-    case NSUpArrowFunctionKey:
-      keyDownList.insert(NSUpArrowFunctionKey)
-    case NSDownArrowFunctionKey:
-      keyDownList.insert(NSDownArrowFunctionKey)
-    case NSLeftArrowFunctionKey:
-      keyDownList.insert(NSLeftArrowFunctionKey)
-    case NSRightArrowFunctionKey:
-      keyDownList.insert(NSRightArrowFunctionKey)
+    func handleKeyDown(event: NSEvent) {
+        guard
+            let characters = event.charactersIgnoringModifiers,
+            let keyValue = characters.unicodeScalars.first?.value
+            else {
+                return
+        }
 
-    case Int((String("w").unicodeScalars.first?.value)!):
-      keyDownList.insert(NSUpArrowFunctionKey)
-    case Int((String("s").unicodeScalars.first?.value)!):
-      keyDownList.insert(NSDownArrowFunctionKey)
-    case Int((String("a").unicodeScalars.first?.value)!):
-      keyDownList.insert(NSLeftArrowFunctionKey)
-    case Int((String("d").unicodeScalars.first?.value)!):
-      keyDownList.insert(NSRightArrowFunctionKey)
+        switch (Int(keyValue)) {
+        case NSUpArrowFunctionKey:
+            keyDownList.insert(NSUpArrowFunctionKey)
+        case NSDownArrowFunctionKey:
+            keyDownList.insert(NSDownArrowFunctionKey)
+        case NSLeftArrowFunctionKey:
+            keyDownList.insert(NSLeftArrowFunctionKey)
+        case NSRightArrowFunctionKey:
+            keyDownList.insert(NSRightArrowFunctionKey)
 
-    default:
-      return
+        case Int((String("w").unicodeScalars.first?.value)!):
+            keyDownList.insert(NSUpArrowFunctionKey)
+        case Int((String("s").unicodeScalars.first?.value)!):
+            keyDownList.insert(NSDownArrowFunctionKey)
+        case Int((String("a").unicodeScalars.first?.value)!):
+            keyDownList.insert(NSLeftArrowFunctionKey)
+        case Int((String("d").unicodeScalars.first?.value)!):
+            keyDownList.insert(NSRightArrowFunctionKey)
+
+        default:
+            return
+        }
+        dispatchKeyHandler()
     }
-    dispatchKeyHandler()
-  }
 
-  func handleKeyUp(event: NSEvent) {
-    guard
-      let characters = event.charactersIgnoringModifiers,
-      let keyValue = characters.unicodeScalars.first?.value
-      else {
-        return
+    func handleKeyUp(event: NSEvent) {
+        guard
+            let characters = event.charactersIgnoringModifiers,
+            let keyValue = characters.unicodeScalars.first?.value
+            else {
+                return
+        }
+
+        switch (Int(keyValue)) {
+        case NSUpArrowFunctionKey:
+            keyDownList.remove(NSUpArrowFunctionKey)
+        case NSDownArrowFunctionKey:
+            keyDownList.remove(NSDownArrowFunctionKey)
+        case NSLeftArrowFunctionKey:
+            keyDownList.remove(NSLeftArrowFunctionKey)
+        case NSRightArrowFunctionKey:
+            keyDownList.remove(NSRightArrowFunctionKey)
+
+        case Int((String("w").unicodeScalars.first?.value)!):
+            keyDownList.remove(NSUpArrowFunctionKey)
+        case Int((String("s").unicodeScalars.first?.value)!):
+            keyDownList.remove(NSDownArrowFunctionKey)
+        case Int((String("a").unicodeScalars.first?.value)!):
+            keyDownList.remove(NSLeftArrowFunctionKey)
+        case Int((String("d").unicodeScalars.first?.value)!):
+            keyDownList.remove(NSRightArrowFunctionKey)
+
+        default:
+            break;
+        }
     }
 
-    switch (Int(keyValue)) {
-    case NSUpArrowFunctionKey:
-      keyDownList.remove(NSUpArrowFunctionKey)
-    case NSDownArrowFunctionKey:
-      keyDownList.remove(NSDownArrowFunctionKey)
-    case NSLeftArrowFunctionKey:
-      keyDownList.remove(NSLeftArrowFunctionKey)
-    case NSRightArrowFunctionKey:
-      keyDownList.remove(NSRightArrowFunctionKey)
+    func moveUp() {
+        let scaleFactor = 1500.0 / mapView.camera.altitude
+        centerCoordinate.longitude += (moveDelta * sin(heading*Double.pi/180.0) / scaleFactor)
+        centerCoordinate.latitude += (moveDelta * cos(heading*Double.pi/180.0) / scaleFactor)
+        updateCamera()
 
-    case Int((String("w").unicodeScalars.first?.value)!):
-      keyDownList.remove(NSUpArrowFunctionKey)
-    case Int((String("s").unicodeScalars.first?.value)!):
-      keyDownList.remove(NSDownArrowFunctionKey)
-    case Int((String("a").unicodeScalars.first?.value)!):
-      keyDownList.remove(NSLeftArrowFunctionKey)
-    case Int((String("d").unicodeScalars.first?.value)!):
-      keyDownList.remove(NSRightArrowFunctionKey)
-
-    default:
-        break;
+        jumpTo(location: centerCoordinate)
     }
-  }
 
-  func moveUp() {
-    let scaleFactor = 1500.0 / mapView.camera.altitude
-    centerCoordinate.longitude += (moveDelta * sin(heading*Double.pi/180.0) / scaleFactor)
-    centerCoordinate.latitude += (moveDelta * cos(heading*Double.pi/180.0) / scaleFactor)
-    updateCamera()
+    func moveDown() {
+        let scaleFactor = 1500.0 / mapView.camera.altitude
+        centerCoordinate.longitude -= (moveDelta * sin(heading*Double.pi/180.0) / scaleFactor)
+        centerCoordinate.latitude -= (moveDelta * cos(heading*Double.pi/180.0) / scaleFactor)
+        updateCamera()
 
-    jumpTo(location: centerCoordinate)
-  }
+        jumpTo(location: centerCoordinate)
+    }
 
-  func moveDown() {
-    let scaleFactor = 1500.0 / mapView.camera.altitude
-    centerCoordinate.longitude -= (moveDelta * sin(heading*Double.pi/180.0) / scaleFactor)
-    centerCoordinate.latitude -= (moveDelta * cos(heading*Double.pi/180.0) / scaleFactor)
-    updateCamera()
+    func moveLeft() {
+        heading -= headingDelta
+        updateCamera()
 
-    jumpTo(location: centerCoordinate)
-  }
+        jumpTo(location: centerCoordinate)
+    }
 
-  func moveLeft() {
-    heading -= headingDelta
-    updateCamera()
+    func moveRight() {
+        heading += headingDelta
+        updateCamera()
 
-    jumpTo(location: centerCoordinate)
-  }
-
-  func moveRight() {
-    heading += headingDelta
-    updateCamera()
-
-    jumpTo(location: centerCoordinate)
-  }
+        jumpTo(location: centerCoordinate)
+    }
 }
 
 extension ViewController: CLLocationManagerDelegate {
-  func locationManager(_ manager: CLLocationManager, didUpdateTo newLocation: CLLocation, from oldLocation: CLLocation) {
-    locationManager.stopUpdatingLocation()
+    func locationManager(_ manager: CLLocationManager, didUpdateTo newLocation: CLLocation, from oldLocation: CLLocation) {
+        locationManager.stopUpdatingLocation()
 
-    centerCoordinate = newLocation.coordinate
+        centerCoordinate = newLocation.coordinate
 
-    updateCamera(mapInitialized: false)
+        updateCamera(mapInitialized: false)
 
-    if let url = mapBuilder.gpxFileURL {
-      let folderURL = url.deletingLastPathComponent
-      NSWorkspace.shared.open(folderURL())
+        if let url = mapBuilder.gpxFileURL {
+            let folderURL = url.deletingLastPathComponent
+            NSWorkspace.shared.open(folderURL())
+        }
     }
-  }
 }
 
 extension ViewController: MKMapViewDelegate {
-  func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-    if (abs(mapView.centerCoordinate.latitude - centerCoordinate.latitude) > 0.00001
-      || abs(mapView.centerCoordinate.longitude - centerCoordinate.longitude) > 0.00001) {
-      centerCoordinate = mapView.centerCoordinate
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        if (abs(mapView.centerCoordinate.latitude - centerCoordinate.latitude) > 0.00001
+            || abs(mapView.centerCoordinate.longitude - centerCoordinate.longitude) > 0.00001) {
+            centerCoordinate = mapView.centerCoordinate
 
-      updateCamera()
+            updateCamera()
 
-      jumpTo(location: centerCoordinate)
+            jumpTo(location: centerCoordinate)
+        }
     }
-  }
 }
