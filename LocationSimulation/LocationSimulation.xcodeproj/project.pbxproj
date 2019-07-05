@@ -194,6 +194,11 @@
 					E1E0187A1D577842009EFBDF = {
 						CreatedOnToolsVersion = 7.3.1;
 						LastSwiftMigration = 0820;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					E1E0188E1D577842009EFBDF = {
 						CreatedOnToolsVersion = 7.3.1;
