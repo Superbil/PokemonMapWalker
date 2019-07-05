@@ -7,11 +7,6 @@
 import Foundation
 import CoreLocation
 
-struct GPX {
-    var location: CLLocationCoordinate2D
-    var date: Date?
-}
-
 extension DateFormatter {
     static var iso8601 : DateFormatter {
         get {
@@ -24,12 +19,22 @@ extension DateFormatter {
     }
 }
 
+extension CLLocation {
+    convenience init(coordinate: CLLocationCoordinate2D, timestamp: Date) {
+        self.init(coordinate: coordinate,
+                  altitude: kCLDistanceFilterNone,
+                  horizontalAccuracy: kCLDistanceFilterNone,
+                  verticalAccuracy: kCLDistanceFilterNone,
+                  timestamp: timestamp)
+    }
+}
+
 class GPXMaker {
 
-    var locations: [GPX]
+    var locations: [CLLocation]
 
-    init(locations list: [GPX]) {
-        locations = list
+    init(locations l: [CLLocation]) {
+        locations = l
     }
 
     var document: XMLDocument {
@@ -38,24 +43,23 @@ class GPXMaker {
         }
     }
 
-    func createDocument(withLocations locations: [GPX]) -> XMLDocument {
+    func createDocument(withLocations locations: [CLLocation]) -> XMLDocument {
         var list: [XMLNode] = []
         for l in locations {
             let lon = XMLNode(kind: .attribute)
             lon.name = "lon"
-            lon.stringValue = String(l.location.longitude)
+            lon.stringValue = String(l.coordinate.longitude)
 
             let lat = XMLNode(kind: .attribute)
             lat.name = "lat"
-            lat.stringValue = String(l.location.latitude)
+            lat.stringValue = String(l.coordinate.latitude)
 
             var childrens: [XMLNode] = []
-            if let date = l.date {
-                let dateElement = XMLNode(kind: .element)
-                dateElement.name = "time"
-                dateElement.stringValue = DateFormatter.iso8601.string(from: date)
-                childrens.append(dateElement)
-            }
+            let date = l.timestamp
+            let dateElement = XMLNode(kind: .element)
+            dateElement.name = "time"
+            dateElement.stringValue = DateFormatter.iso8601.string(from: date)
+            childrens.append(dateElement)
 
             let wpt = XMLElement()
             wpt.name = "wpt"

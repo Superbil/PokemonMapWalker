@@ -28,7 +28,7 @@ class MapBuilder {
 
     private let makeGpxQueue: DispatchQueue = DispatchQueue(label: "makeGpxQueue")
 
-    func makeGpxFile(gpxs: [GPX], block: (() -> Void)?) {
+    func makeGpxFile(gpxs: [CLLocation], block: (() -> Void)?) {
         guard let gpxFileURL = gpxFileURL else {
             assertionFailure("Must setup gpxFileURL")
             return
@@ -89,8 +89,8 @@ class MapBuilder {
     public func drawPoint(_ point: CLLocationCoordinate2D, block: (() -> Void)?) {
 
         let startDate = Date()
-        var gpxs: [GPX] = []
-        gpxs.append(GPX(location: point, date: startDate))
+        var gpxs: [CLLocation] = []
+        gpxs.append(CLLocation(coordinate: point, timestamp: startDate))
 
         for i in 1...3 {
             let l = self.makePointIn(center: point)
@@ -98,7 +98,7 @@ class MapBuilder {
             let calender = Calendar.current
             let nextDate = calender.date(byAdding: .second, value: i, to: startDate)
 
-            gpxs.append(GPX(location: l, date: nextDate))
+            gpxs.append(CLLocation(coordinate: l, timestamp: nextDate!))
         }
 
         makeGpxQueue.async(flags: .barrier) {
