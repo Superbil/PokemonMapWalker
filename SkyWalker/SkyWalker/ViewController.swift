@@ -15,6 +15,7 @@ class ViewController: NSViewController {
 
     var heading: CLLocationDirection = 0.0
     var centerCoordinate = CLLocationCoordinate2D()
+    var currentPitch: CGFloat = 45.0
 
     let locationManager = CLLocationManager()
 
@@ -26,6 +27,7 @@ class ViewController: NSViewController {
             mapView.showsBuildings = true
             mapView.mapType = .standard
             mapView.showsCompass = true
+            mapView.showsUserLocation = true
         }
     }
     @IBOutlet weak var resultLabel: NSTextField! {
@@ -61,14 +63,16 @@ class ViewController: NSViewController {
         }
     }
 
-    func updateCamera(mapInitialized:Bool = true) {
+    func updateCamera(mapInitialized: Bool = true) {
+        currentPitch = mapView.camera.pitch
+
         var distance = 500.0
-        if mapInitialized {
-            distance = mapView.camera.altitude / cos(Double.pi*(Double(mapView.camera.pitch)/180.0))
+        if mapInitialized, currentPitch > 0 {
+            distance = mapView.camera.altitude / cos(Double.pi*(Double(currentPitch)/180.0))
         }
         let camera = MKMapCamera(lookingAtCenter: centerCoordinate,
                                  fromDistance: distance,
-                                 pitch: 45,
+                                 pitch: currentPitch,
                                  heading: heading)
         mapView.camera = camera
     }
