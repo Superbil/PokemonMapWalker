@@ -72,7 +72,7 @@ class ViewController: NSViewController {
         mapView.camera = camera
     }
 
-    func executeStatus(_ result: Bool) {
+    func executeStatus(_ result: Bool, error: FalconError? = nil) {
         if Settings.showMessage == false {
             DispatchQueue.main.async {
                 self.resultLabel.stringValue = ""
@@ -82,7 +82,11 @@ class ViewController: NSViewController {
 
         DispatchQueue.main.async {
             self.resultLabel.textColor = result ? .green : .red
-            self.resultLabel.stringValue = result ? "Success" : "Failed"
+            var errorMessage = "Failed"
+            if let error = error {
+                errorMessage = error.errorMessage()
+            }
+            self.resultLabel.stringValue = result ? "Success" : errorMessage
         }
     }
 
@@ -95,8 +99,7 @@ class ViewController: NSViewController {
             do {
                 try falcon?.resetJump()
             } catch {
-                debugPrint("Can't reset")
-                self.executeStatus(false)
+                self.executeStatus(false, error: error as? FalconError)
             }
             return
         }
@@ -108,7 +111,7 @@ class ViewController: NSViewController {
                 try falcon.jumpToLightSpeed()
                 self.executeStatus(true)
             } catch {
-                self.executeStatus(false)
+                self.executeStatus(false, error: error as? FalconError)
             }
         }
     }
