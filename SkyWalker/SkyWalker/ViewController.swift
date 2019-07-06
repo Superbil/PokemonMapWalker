@@ -34,6 +34,7 @@ class ViewController: NSViewController {
         }
     }
 
+    let falconQueue: DispatchQueue = DispatchQueue(label: "falcon queue")
     var falcon: Falcon?
     let mapBuilder: MapBuilder = MapBuilder(fileName: "R2-D2.gpx")
 
@@ -95,23 +96,24 @@ class ViewController: NSViewController {
             return
         }
 
-        if CLLocationCoordinate2DIsValid(location) == false {
-            do {
-                try falcon?.resetJump()
-            } catch {
-                self.executeStatus(false, error: error as? FalconError)
+        falconQueue.async(flags: .barrier) {
+            if CLLocationCoordinate2DIsValid(location) == false {
+                do {
+                    try self.falcon?.resetJump()
+                } catch {
+                    self.executeStatus(false, error: error as? FalconError)
+                }
+                return
             }
-            return
-        }
 
-        mapBuilder.drawPoint(location) {
-            guard let falcon = self.falcon else { return }
-
-            do {
-                try falcon.jumpToLightSpeed()
-                self.executeStatus(true)
-            } catch {
-                self.executeStatus(false, error: error as? FalconError)
+            self.mapBuilder.drawPoint(location) {
+                guard let falcon = self.falcon else { return }
+                do {
+                    try falcon.jumpToLightSpeed()
+                    self.executeStatus(true)
+                } catch {
+                    self.executeStatus(false, error: error as? FalconError)
+                }
             }
         }
     }
