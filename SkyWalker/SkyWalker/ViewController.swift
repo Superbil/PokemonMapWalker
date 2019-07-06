@@ -43,10 +43,8 @@ class ViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Get user location
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.startUpdatingLocation()
 
         do {
             falcon = try Falcon()
@@ -55,6 +53,12 @@ class ViewController: NSViewController {
         }
 
         jumpTo(location: kCLLocationCoordinate2DInvalid)
+    }
+
+    override func viewDidAppear() {
+        super.viewDidAppear()
+        // Get user location
+        locationManager.startUpdatingLocation()
     }
 
     override var representedObject: Any? {
