@@ -187,13 +187,13 @@
                                                 <action selector="showGPXFolderActionWith:" target="Ady-hI-5gd" id="RUa-WN-Nxr"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Run Script" id="Gi5-1S-RQB">
+                                        <menuItem title="Run Script" tag="1" id="Gi5-1S-RQB">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="runScriptActionWith:" target="Ady-hI-5gd" id="1eD-EG-k6Q"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Show Debug Message" tag="1" id="bnv-VX-kVE">
+                                        <menuItem title="Show Debug Message" tag="2" id="bnv-VX-kVE">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="showMessageActionWith:" target="Ady-hI-5gd" id="F3o-1c-BHy"/>

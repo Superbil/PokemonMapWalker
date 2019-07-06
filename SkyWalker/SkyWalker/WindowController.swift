@@ -13,10 +13,13 @@ class WindowController : NSWindowController {
             return
         }
         let debugMenu = menu.item(withTitle: "Debug")
-        if let runScriptMenu = debugMenu?.submenu?.item(withTag: 0) {
+        if let showFolderMenu = debugMenu?.submenu?.item(withTag: 0) {
+            showFolderMenu.state = Settings.showGPXFolder ? .on : .off
+        }
+        if let runScriptMenu = debugMenu?.submenu?.item(withTag: 1) {
             runScriptMenu.state = Settings.runScript ? .on : .off
         }
-        if let showLabelMenu = debugMenu?.submenu?.item(withTag: 1) {
+        if let showLabelMenu = debugMenu?.submenu?.item(withTag: 2) {
             showLabelMenu.state = Settings.showMessage ? .on : .off
         }
     }
