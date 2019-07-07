@@ -14,7 +14,10 @@ class ViewController: NSViewController {
     let moveDelta: CLLocationDegrees = 0.000001
 
     var heading: CLLocationDirection = 0.0
-    var centerCoordinate = CLLocationCoordinate2D()
+
+    var userAnnotaion: MKAnnotation?
+
+    var centerCoordinate = kCLLocationCoordinate2DInvalid
     var currentPitch: CGFloat = 45.0
 
     let locationManager = CLLocationManager()
@@ -27,7 +30,6 @@ class ViewController: NSViewController {
             mapView.showsBuildings = true
             mapView.mapType = .standard
             mapView.showsCompass = true
-            mapView.showsUserLocation = true
         }
     }
     @IBOutlet weak var resultLabel: NSTextField! {
@@ -262,8 +264,12 @@ extension ViewController: CLLocationManagerDelegate {
         locationManager.stopUpdatingLocation()
 
         centerCoordinate = newLocation.coordinate
-
         updateCamera(mapInitialized: false)
+
+        let a = MKPointAnnotation()
+        a.coordinate = newLocation.coordinate
+        mapView.addAnnotation(a)
+        userAnnotaion = a
 
         if let url = mapBuilder.gpxFileURL {
             let folderURL = url.deletingLastPathComponent
