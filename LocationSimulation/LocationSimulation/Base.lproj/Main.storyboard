@@ -27,13 +27,22 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DOS-XC-uqA">
+                                <rect key="frame" x="171.5" y="632" width="71" height="30"/>
+                                <state key="normal" title="Open Map"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="6gY-SJ-Kyb" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="BdT-yY-SLG"/>
                             <constraint firstItem="6gY-SJ-Kyb" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="KSO-cj-1DK"/>
+                            <constraint firstItem="DOS-XC-uqA" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="qKA-pA-1ck"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="DOS-XC-uqA" secondAttribute="bottom" constant="200" id="zUb-df-BNT"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="actionButton" destination="DOS-XC-uqA" id="yZe-SM-A37"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
