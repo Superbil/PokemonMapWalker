@@ -39,7 +39,7 @@ class ViewController: UIViewController {
             }
         }
 
-        addAction("Apple Map" , URL(string: "http://maps.apple.com/maps?")!)
+        addAction("Apple Map" , URL(string: "map://?")!)
         addAction("Google Map", URL(string: "comgooglemaps://?")!)
 
         c.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
