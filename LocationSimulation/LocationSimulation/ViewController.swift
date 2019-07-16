@@ -30,18 +30,18 @@ class ViewController: UIViewController {
         let c = UIAlertController(title: "Select map app",
                                   message: nil,
                                   preferredStyle: .actionSheet)
-        let appleMapURL = URL(string: "http://maps.apple.com/maps?")!
-        if UIApplication.shared.canOpenURL(appleMapURL) {
-            c.addAction(UIAlertAction(title: "Apple Map", style: .default, handler: { _ in
-                UIApplication.shared.openURL(appleMapURL)
-            }))
+
+        let addAction: ((_ title: String, _ url: URL) -> Void) = { (title, url) in
+            if UIApplication.shared.canOpenURL(url) {
+                c.addAction(UIAlertAction(title: title, style: .default, handler: { _ in
+                    UIApplication.shared.openURL(url)
+                }))
+            }
         }
-        let googleMapURL = URL(string: "comgooglemaps://?")!
-        if UIApplication.shared.canOpenURL(googleMapURL) {
-            c.addAction(UIAlertAction(title: "Google Map", style: .default, handler: { action in
-                UIApplication.shared.openURL(googleMapURL)
-            }))
-        }
+
+        addAction("Apple Map" , URL(string: "http://maps.apple.com/maps?")!)
+        addAction("Google Map", URL(string: "comgooglemaps://?")!)
+
         c.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         present(c, animated: true)
     }
