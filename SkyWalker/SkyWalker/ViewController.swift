@@ -21,6 +21,7 @@ class ViewController: NSViewController {
     var currentPitch: CGFloat = 45.0
 
     let locationManager = CLLocationManager()
+    var lastAnnotation: MKPointAnnotation?
 
     var keyDownList = Set<Int>(minimumCapacity: 10)
     var keyHandlerDispatched: Bool = false
@@ -81,6 +82,16 @@ class ViewController: NSViewController {
                                  pitch: currentPitch,
                                  heading: heading)
         mapView.camera = camera
+
+        if CLLocationCoordinate2DIsValid(centerCoordinate) {
+            if lastAnnotation == nil {
+                let pa = MKPointAnnotation()
+                pa.title = "Last location"
+                mapView.addAnnotation(pa)
+                lastAnnotation = pa
+            }
+            lastAnnotation?.coordinate = centerCoordinate
+        }
     }
 
     func executeStatus(_ result: Bool, error: FalconError? = nil) {
@@ -268,6 +279,7 @@ extension ViewController: CLLocationManagerDelegate {
 
         let a = MKPointAnnotation()
         a.coordinate = newLocation.coordinate
+        a.title = "User location"
         mapView.addAnnotation(a)
         userAnnotaion = a
 
@@ -290,5 +302,9 @@ extension ViewController: MKMapViewDelegate {
 
             jumpTo(location: centerCoordinate)
         }
+    }
+
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        return nil
     }
 }
